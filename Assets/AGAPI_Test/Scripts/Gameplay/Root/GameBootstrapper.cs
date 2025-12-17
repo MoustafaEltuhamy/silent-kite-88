@@ -8,6 +8,7 @@ namespace AGAPI.Gameplay
     {
         [Header("Configs")]
         [SerializeField] private BoardConfig boardConfig;
+        [SerializeField] private ScoreConfig scoreConfig;
 
         [Header("Scene Refs")]
         [SerializeField] private DefaultBoardVisuals boardVisuals;
@@ -43,7 +44,7 @@ namespace AGAPI.Gameplay
         void InstanciateGameplaySystems()
         {
             var gameplayEvents = new GameplayEvents();
-            var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner, gameplayEvents);
+            var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner, gameplayEvents, scoreConfig);
 
             boardVisuals.Initialize(boardConfig, gameController);
             screensManager.ConfigureScreen(gameController, gameplayEvents, boardConfig);

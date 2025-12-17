@@ -344,6 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardConfig: {fileID: 11400000, guid: ebba2d39ebd974825b212c7910bb92b0, type: 2}
+  scoreConfig: {fileID: 11400000, guid: db238e92287a5475996f02c7f4ceba7e, type: 2}
   boardVisuals: {fileID: 457468214}
   screensManager: {fileID: 1569196861}
 --- !u!4 &136815960
