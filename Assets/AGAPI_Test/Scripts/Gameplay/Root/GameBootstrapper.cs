@@ -14,6 +14,7 @@ namespace AGAPI.Gameplay
         [Header("Configs")]
         [SerializeField] private BoardConfig boardConfig;
         [SerializeField] private ScoreConfig scoreConfig;
+        [SerializeField] private SoundGeneralConfig soundGeneralConfig;
 
         [Header("Scene Refs")]
         [SerializeField] private DefaultBoardVisuals boardVisuals;
@@ -63,10 +64,15 @@ namespace AGAPI.Gameplay
 
         void InstanciateGameplaySystems()
         {
-            var gameplayEvents = new GameplayEvents();
-            var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner, gameplayEvents, scoreConfig, PersistenceService);
+            var poolableHandlesProvider = new PoolableHandlesProvider();
+            var poolingManager = new DefaultPoolingManager(poolableHandlesProvider);
 
-            boardVisuals.Initialize(boardConfig, gameController);
+            var soundManager = new DefaultSoundManager(poolingManager, soundGeneralConfig, PersistenceService);
+
+            var gameplayEvents = new GameplayEvents();
+            var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner, gameplayEvents, scoreConfig, PersistenceService, soundManager);
+
+            boardVisuals.Initialize(boardConfig, gameController, soundManager);
             screensManager.ConfigureScreen(gameController, gameplayEvents, boardConfig);
 
         }

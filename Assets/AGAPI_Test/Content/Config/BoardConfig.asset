@@ -49,3 +49,127 @@ MonoBehaviour:
     rgba: 4287509863
   cardRevealTimeoutSeconds: 2
   initialRevealDuratoin: 1
+  cardFlippingSound:
+    frequentSound: 1
+    minSoundPlayInterval: 0
+    pitchMode: 0
+    stackPitchResetInterval: 0.2
+    hasCustomStackPitchValues: 0
+    stackPitchStartValue: 0
+    stackPitchEndValue: 0
+    stackPitchIncrementValue: 0
+    soundAudioSourceData:
+      clip: {fileID: 8300000, guid: 0dfcfbc8da9c044afb6a80b790d01ea5, type: 3}
+      mixerGroup: {fileID: 6948994904658188595, guid: 8f237ed7fde8d4366977f4d2b7197351, type: 2}
+      loop: 0
+      playOnAwake: 0
+      mute: 0
+      bypassEffects: 0
+      bypassListenerEffects: 0
+      bypassReverbZones: 0
+      priority: 128
+      volume: 0.25
+      pitch: 1
+      panStereo: 0
+      spatialBlend: 0
+      reverbZoneMix: 1
+      dopplerLevel: 1
+      spread: 0
+      minDistance: 1
+      maxDistance: 500
+      ignoreListenerVolume: 0
+      ignoreListenerPause: 0
+      rolloffMode: 0
+  cardMatchSound:
+    frequentSound: 0
+    minSoundPlayInterval: 0
+    pitchMode: 0
+    stackPitchResetInterval: 0.2
+    hasCustomStackPitchValues: 0
+    stackPitchStartValue: 0
+    stackPitchEndValue: 0
+    stackPitchIncrementValue: 0
+    soundAudioSourceData:
+      clip: {fileID: 8300000, guid: 2a62c1931a1ca45839c2a0a7a04615b0, type: 3}
+      mixerGroup: {fileID: 6948994904658188595, guid: 8f237ed7fde8d4366977f4d2b7197351, type: 2}
+      loop: 0
+      playOnAwake: 0
+      mute: 0
+      bypassEffects: 0
+      bypassListenerEffects: 0
+      bypassReverbZones: 0
+      priority: 128
+      volume: 0.25
+      pitch: 1
+      panStereo: 0
+      spatialBlend: 0
+      reverbZoneMix: 1
+      dopplerLevel: 1
+      spread: 0
+      minDistance: 1
+      maxDistance: 500
+      ignoreListenerVolume: 0
+      ignoreListenerPause: 0
+      rolloffMode: 0
+  cardMissmatchSound:
+    frequentSound: 0
+    minSoundPlayInterval: 0
+    pitchMode: 0
+    stackPitchResetInterval: 0.2
+    hasCustomStackPitchValues: 0
+    stackPitchStartValue: 0
+    stackPitchEndValue: 0
+    stackPitchIncrementValue: 0
+    soundAudioSourceData:
+      clip: {fileID: 8300000, guid: bc73b161c788b405985c0287745dd5e2, type: 3}
+      mixerGroup: {fileID: 6948994904658188595, guid: 8f237ed7fde8d4366977f4d2b7197351, type: 2}
+      loop: 0
+      playOnAwake: 0
+      mute: 0
+      bypassEffects: 0
+      bypassListenerEffects: 0
+      bypassReverbZones: 0
+      priority: 128
+      volume: 0.25
+      pitch: 1
+      panStereo: 0
+      spatialBlend: 0
+      reverbZoneMix: 1
+      dopplerLevel: 1
+      spread: 0
+      minDistance: 1
+      maxDistance: 500
+      ignoreListenerVolume: 0
+      ignoreListenerPause: 0
+      rolloffMode: 0
+  gameOverSound:
+    frequentSound: 0
+    minSoundPlayInterval: 0
+    pitchMode: 0
+    stackPitchResetInterval: 0.2
+    hasCustomStackPitchValues: 0
+    stackPitchStartValue: 0
+    stackPitchEndValue: 0
+    stackPitchIncrementValue: 0
+    soundAudioSourceData:
+      clip: {fileID: 8300000, guid: dd6deb491237e4f88bd7d5bb16a1546f, type: 3}
+      mixerGroup: {fileID: 6948994904658188595, guid: 8f237ed7fde8d4366977f4d2b7197351, type: 2}
+      loop: 0
+      playOnAwake: 0
+      mute: 0
+      bypassEffects: 0
+      bypassListenerEffects: 0
+      bypassReverbZones: 0
+      priority: 128
+      volume: 0.25
+      pitch: 1
+      panStereo: 0
+      spatialBlend: 0
+      reverbZoneMix: 1
+      dopplerLevel: 1
+      spread: 0
+      minDistance: 1
+      maxDistance: 500
+      ignoreListenerVolume: 0
+      ignoreListenerPause: 0
+      rolloffMode: 0

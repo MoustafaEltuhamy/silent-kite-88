@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e8a5bc9c4a4485d86575801d103d82, type: 3}
+  m_Name: SoundGeneralConfig
+  m_EditorClassIdentifier: 
+  soundEmitterPrefab: {fileID: 1548492096333640874, guid: 1bd3f92f0d0fc46d7a5d6896a3b1b654, type: 3}
+  prewarmPoolSize: 10
+  maxSoundEmitterInstances: 10
+  minInstancesAssignedToFrequentSounds: 5
+  randomPitchIncrementMin: -0.05
+  randomPitchIncrementMax: 0.05
+  stackPitchStartValue: 0
+  stackPitchEndValue: 0
+  stackPitchIncrementValue: 0

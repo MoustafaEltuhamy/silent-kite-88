@@ -1,6 +1,4 @@
 
-using System;
-using AGAPI.Systems;
 using UnityEngine;
 
 namespace AGAPI.Systems

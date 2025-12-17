@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AGAPI.Foundation;
+using AGAPI.Systems;
 
 namespace AGAPI.Gameplay
 {
@@ -12,16 +13,19 @@ namespace AGAPI.Gameplay
 
         private BoardConfig _boardConfig;
         private IBoardInputHandler _boardInputHandler;
-
+        private ISoundManager _soundManager;
+        private SoundBuilder _soundBuilder;
         private readonly Dictionary<int, CardVisual> _cardsByIndex = new();
 
 
         //------------------IBoardVisuals Implementation------------------//
 
-        public void Initialize(BoardConfig boardConfig, IBoardInputHandler boardInputHandler)
+        public void Initialize(BoardConfig boardConfig, IBoardInputHandler boardInputHandler, ISoundManager soundManager)
         {
             _boardConfig = boardConfig;
             _boardInputHandler = boardInputHandler;
+            _soundManager = soundManager;
+            _soundBuilder = soundManager.CreateSoundBuilder();
         }
 
         public void InitializeVisuals(Vector2Int boardSize, Dictionary<int, CardData> cardsByIndex)
@@ -53,6 +57,7 @@ namespace AGAPI.Gameplay
         {
             if (_cardsByIndex.TryGetValue(cardIndex, out var cardVisual))
             {
+                _soundBuilder.Play(_boardConfig.CardFlippingSound);
                 cardVisual.PlayFlipUpAnimation(onFlipComplete);
             }
         }
@@ -60,6 +65,7 @@ namespace AGAPI.Gameplay
         {
             if (_cardsByIndex.TryGetValue(cardIndex, out var cardVisual))
             {
+                _soundBuilder.Play(_boardConfig.CardFlippingSound);
                 cardVisual.PlayFlipDownAnimation(onFlipComplete);
             }
         }

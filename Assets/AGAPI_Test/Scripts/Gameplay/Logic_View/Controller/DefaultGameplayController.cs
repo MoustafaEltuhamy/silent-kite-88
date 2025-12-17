@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using AGAPI.Foundation;
 using AGAPI.Systems;
 
 namespace AGAPI.Gameplay
@@ -22,10 +20,13 @@ namespace AGAPI.Gameplay
         private readonly GameplayEvents _gameplayEvents;
         private readonly ScoreConfig _scoreConfig;
         private readonly IPersistenceService _persistenceService;
+        private readonly ISoundManager _soundManager;
+        private readonly SoundBuilder _soundBuilder;
 
         public DefaultGameplayController(IBoardVisuals boardVisuals, BoardConfig boardConfig,
                                         ICoroutineRunner coroutineRunner, GameplayEvents gameplayEvents,
-                                        ScoreConfig scoreConfig, IPersistenceService persistenceService)
+                                        ScoreConfig scoreConfig, IPersistenceService persistenceService,
+                                        ISoundManager soundManager)
         {
             _boardVisuals = boardVisuals;
             _boardConfig = boardConfig;
@@ -33,6 +34,8 @@ namespace AGAPI.Gameplay
             _gameplayEvents = gameplayEvents;
             _scoreConfig = scoreConfig;
             _persistenceService = persistenceService;
+            _soundManager = soundManager;
+            _soundBuilder = soundManager.CreateSoundBuilder();
 
             Initialize();
             Debug.Log("DefaultGameplayController initialized.");
@@ -41,6 +44,9 @@ namespace AGAPI.Gameplay
         // ------- IGameplayContreoller iplementation -------
         public void ReportMatchResult(CardData firstCard, CardData secondCard, bool isMatch, int remainingPairs)
         {
+            if (isMatch) _soundBuilder.Play(_boardConfig.CardMatchSound);
+            else _soundBuilder.Play(_boardConfig.CardMissmatchSound);
+
             _scoreSystem.ApplyMatchResult(isMatch);
             _gameplayEvents.Invoke(new GameplayEvents.OnScoreUpdate(_scoreSystem.Score));
 
@@ -51,6 +57,7 @@ namespace AGAPI.Gameplay
             {
                 _levelProgression.MarkLevelkCompleted();
                 _gameplayEvents.Invoke(new GameplayEvents.OnLevelCompleted());
+                _soundBuilder.Play(_boardConfig.GameOverSound);
             }
 
             _persistenceService.MarkDirty(FileKey, LevelProgressionDataKey, _levelProgression);
