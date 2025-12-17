@@ -41,7 +41,8 @@ namespace AGAPI.Gameplay
 
         void InstanciateGameplaySystems()
         {
-            var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner);
+            var gameplayEvents = new GameplayEvents();
+            var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner, gameplayEvents);
             boardVisuals.Initialize(boardConfig, gameController);
 
 

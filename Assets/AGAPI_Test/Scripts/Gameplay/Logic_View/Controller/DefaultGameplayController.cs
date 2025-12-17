@@ -13,12 +13,14 @@ namespace AGAPI.Gameplay
         private readonly IBoardVisuals _boardVisuals;
         private readonly BoardConfig _boardConfig;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly GameplayEvents _gameplayEvents;
 
-        public DefaultGameplayController(IBoardVisuals boardVisuals, BoardConfig boardConfig, ICoroutineRunner coroutineRunner)
+        public DefaultGameplayController(IBoardVisuals boardVisuals, BoardConfig boardConfig, ICoroutineRunner coroutineRunner, GameplayEvents gameplayEvents)
         {
             _boardVisuals = boardVisuals;
             _boardConfig = boardConfig;
             _coroutineRunner = coroutineRunner;
+            _gameplayEvents = gameplayEvents;
             Initialize();
             Debug.Log("DefaultGameplayController initialized.");
         }
@@ -28,12 +30,13 @@ namespace AGAPI.Gameplay
         {
             // to do : report result to score manager and fetch updated score
             // to do : update score on level progression
+            // to do : trigger score update event
             _levelProgression.UpdateCardRecord(firstCard);
             _levelProgression.UpdateCardRecord(secondCard);
             if (remainingPairs == 0)
             {
                 _levelProgression.MarkLevelkCompleted();
-                // to do : trigger level completed event
+                _gameplayEvents.Invoke(new GameplayEvents.OnLevelCompleted());
             }
             // to do : set _levelProgression updates dirty on saving system
         }
@@ -53,6 +56,7 @@ namespace AGAPI.Gameplay
                 _levelProgression.SetBoardSize(boardSize);
                 _levelProgression.MarkLevelStarted();
                 // to do : set _levelProgression updates dirty on saving system
+                _gameplayEvents.Invoke(new GameplayEvents.OnLevelStarts());
             }
             else
             {
@@ -66,6 +70,7 @@ namespace AGAPI.Gameplay
                 var boardSize = _levelProgression.BoardSize;
                 var cardRecords = _levelProgression.GetCardRecords();
                 _boardManager.CreateBoardFromRecord(boardSize, cardRecords);
+                _gameplayEvents.Invoke(new GameplayEvents.OnLevelStarts());
                 return true;
             }
             return false;
