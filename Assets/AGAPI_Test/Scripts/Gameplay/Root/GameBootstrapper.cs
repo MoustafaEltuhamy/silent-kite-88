@@ -9,12 +9,13 @@ namespace AGAPI.Gameplay
         [Header("Configs")]
         [SerializeField] private BoardConfig boardConfig;
 
-        [Header("Refs")]
+        [Header("Scene Refs")]
         [SerializeField] private DefaultBoardVisuals boardVisuals;
+        [SerializeField] private UIScreenManager screensManager;
 
         private ICoroutineRunner _coroutineRunner;
 
-        void Awake()
+        void Start()
         {
             InsureRefrances();
             InstanciatePrisitanceObjects();
@@ -43,16 +44,11 @@ namespace AGAPI.Gameplay
         {
             var gameplayEvents = new GameplayEvents();
             var gameController = new DefaultGameplayController(boardVisuals, boardConfig, _coroutineRunner, gameplayEvents);
+
             boardVisuals.Initialize(boardConfig, gameController);
+            screensManager.ConfigureScreen(gameController, gameplayEvents, boardConfig);
 
-
-            // to do : Remove this, game should start from menu ui not here!
-            TempStartGame(gameController);
         }
 
-        void TempStartGame(IUIInputHandler uIInputHandler)
-        {
-            uIInputHandler.StartNewGame(new Vector2Int(5, 4));
-        }
     }
 }

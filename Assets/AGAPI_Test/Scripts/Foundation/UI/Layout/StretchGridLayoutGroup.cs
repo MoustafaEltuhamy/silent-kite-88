@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace AGAPI.Gameplay
+namespace AGAPI.Foundation
 {
     [AddComponentMenu("Layout/Stretch Grid Layout Group")]
     public class StretchGridLayoutGroup : GridLayoutGroup

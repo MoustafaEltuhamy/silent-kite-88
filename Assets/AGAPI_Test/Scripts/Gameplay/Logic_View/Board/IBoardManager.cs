@@ -10,6 +10,7 @@ namespace AGAPI.Gameplay
     {
         bool TryCreateNewBoard(Vector2Int size, out Dictionary<int, CardRecord> cardRecords, out string errorMessage);
         void CreateBoardFromRecord(Vector2Int boardSize, Dictionary<int, CardRecord> cardRecords);
+        void OnGameStart();
         void PickCard(int cardIndex);
 
     }

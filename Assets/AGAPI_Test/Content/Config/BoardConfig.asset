@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b7584bf4ced4932ab74b1763287e02, type: 3}
   m_Name: BoardConfig
   m_EditorClassIdentifier: 
+  availableBoardSizes:
+  - {x: 2, y: 2}
+  - {x: 3, y: 3}
+  - {x: 4, y: 3}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 6, y: 5}
   cardVisualPrefab: {fileID: 6245110523406263222, guid: db49940d224e147c2879bb5187e85424, type: 3}
   cardUpColor:
     serializedVersion: 2

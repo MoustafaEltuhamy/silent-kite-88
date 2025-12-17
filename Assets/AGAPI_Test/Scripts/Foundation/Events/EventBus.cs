@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AGAPI.Systems
+namespace AGAPI.Foundation
 {
     public abstract class EventBus<TEvent> where TEvent : IEvent
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AGAPI.Foundation;
 
 namespace AGAPI.Gameplay
 {
@@ -56,7 +57,8 @@ namespace AGAPI.Gameplay
                 _levelProgression.SetBoardSize(boardSize);
                 _levelProgression.MarkLevelStarted();
                 // to do : set _levelProgression updates dirty on saving system
-                _gameplayEvents.Invoke(new GameplayEvents.OnLevelStarts());
+                StartGame();
+
             }
             else
             {
@@ -70,10 +72,15 @@ namespace AGAPI.Gameplay
                 var boardSize = _levelProgression.BoardSize;
                 var cardRecords = _levelProgression.GetCardRecords();
                 _boardManager.CreateBoardFromRecord(boardSize, cardRecords);
-                _gameplayEvents.Invoke(new GameplayEvents.OnLevelStarts());
+                StartGame();
                 return true;
             }
             return false;
+        }
+        public void ExitLevel()
+        {
+            //restart scene for now
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
 
 
@@ -82,6 +89,12 @@ namespace AGAPI.Gameplay
         {
             _levelProgression = new LevelProgression();
             _boardManager = new DefaultBoardManager(_boardVisuals, _boardConfig, this, _coroutineRunner);
+        }
+
+        void StartGame()
+        {
+            _gameplayEvents.Invoke(new GameplayEvents.OnLevelStarts());
+            _boardManager.OnGameStart();
         }
     }
 }

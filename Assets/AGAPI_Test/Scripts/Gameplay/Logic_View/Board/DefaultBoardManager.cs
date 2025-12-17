@@ -54,22 +54,24 @@ namespace AGAPI.Gameplay
                 return false;
             }
 
-            int totalCards = checked(size.x * size.y);
-            if ((totalCards & 1) == 1)
+            int requestedTotal = checked(size.x * size.y);
+            int effectiveTotal = requestedTotal & ~1;
+
+            if (effectiveTotal < 2)
             {
-                errorMessage = $"Board size {size} has odd total cards ({totalCards}). Must be even.";
+                errorMessage = $"Board size {size} is too small after even adjustment.";
                 return false;
             }
 
             _boardSize = size;
             _cardsByIndex.Clear();
-            int pairsNeeded = totalCards / 2;
+            int pairsNeeded = effectiveTotal / 2;
             int idsCount = availableIds.Count;
 
             List<int> pairIds = BuildPairIdSequence(pairsNeeded, idsCount);
 
             // Expand pairs into card ids (two cards per pair)
-            var cardIds = new List<int>(totalCards);
+            var cardIds = new List<int>(effectiveTotal);
             for (int i = 0; i < pairIds.Count; i++)
             {
                 int id = pairIds[i];
@@ -79,15 +81,13 @@ namespace AGAPI.Gameplay
 
             cardIds.Shuffle();
 
-            for (int index = 0; index < totalCards; index++)
+            for (int index = 0; index < effectiveTotal; index++)
             {
                 int cardId = cardIds[index];
                 _cardsByIndex.Add(index, new CardData(cardId, index));
             }
 
-            // initialize board visuals
-            InitializeBoardVisuals();
-            _remainingPairs = totalCards / 2;
+            _remainingPairs = effectiveTotal / 2;
             return true;
         }
 
@@ -102,10 +102,14 @@ namespace AGAPI.Gameplay
                 _cardsByIndex.Add(kvp.Key, cardData);
             }
 
-            // initialize board visuals
-            InitializeBoardVisuals();
             var totalCards = cardRecords.Count;
             _remainingPairs = totalCards / 2;
+        }
+
+        public void OnGameStart()
+        {
+            // initialize board visuals
+            _boardVisuals.InitializeVisuals(_boardSize, _cardsByIndex);
         }
 
         public void PickCard(int cardIndex)
@@ -241,11 +245,6 @@ namespace AGAPI.Gameplay
             }
 
             return result;
-        }
-
-        private void InitializeBoardVisuals()
-        {
-            _boardVisuals.InitializeVisuals(_boardSize, _cardsByIndex);
         }
     }
 }

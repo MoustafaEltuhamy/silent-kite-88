@@ -5,7 +5,7 @@ using UnityEditor.UI;
 using UnityEngine;
 
 
-namespace AGAPI.Gameplay.Editor
+namespace AGAPI.Foundation.Editor
 {
     [CustomEditor(typeof(StretchGridLayoutGroup))]
     [CanEditMultipleObjects]

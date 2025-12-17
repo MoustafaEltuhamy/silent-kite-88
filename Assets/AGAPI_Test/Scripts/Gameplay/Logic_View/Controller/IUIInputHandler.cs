@@ -9,5 +9,6 @@ namespace AGAPI.Gameplay
     {
         void StartNewGame(Vector2Int boardSize);
         bool TryContinueGame();
+        void ExitLevel();
     }
 }

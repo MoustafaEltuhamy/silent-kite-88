@@ -7,6 +7,7 @@ namespace AGAPI.Gameplay
     [CreateAssetMenu(fileName = "BoardConfig", menuName = GameplayCreateAssetsMenuPaths.Root + "BoardConfig")]
     public class BoardConfig : ScriptableObject
     {
+        [SerializeField] private List<Vector2Int> availableBoardSizes;
         [SerializeField] private CardVisual cardVisualPrefab;
         [SerializeField] private Color32 cardUpColor;
         [SerializeField] private Color32 cardDownColor;
@@ -14,6 +15,7 @@ namespace AGAPI.Gameplay
         [SerializeField] private float cardRevealTimeoutSeconds = 1.0f;
         [SerializeField] private float initialRevealDuratoin = .5f;
 
+        public List<Vector2Int> AvailableBoardSizes => availableBoardSizes;
         public CardVisual CardVisualPrefab => cardVisualPrefab;
         public Color32 CardUpColor => cardUpColor;
         public Color32 CardDownColor => cardDownColor;
