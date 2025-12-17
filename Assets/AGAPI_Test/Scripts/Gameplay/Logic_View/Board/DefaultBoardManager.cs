@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AGAPI.Foundation;
 using System.Collections;
+using System.Linq;
 
 namespace AGAPI.Gameplay
 {
@@ -29,10 +30,10 @@ namespace AGAPI.Gameplay
 
 
         // ------------- IBoardManager implementation -------------
-        public bool TryCreateNewBoard(Vector2Int size, out Dictionary<int, CardRecord> cardRecords, out string errorMessage)
+        public bool TryCreateNewBoard(Vector2Int size, out Dictionary<int, CardData> cardsByIndex, out string errorMessage)
         {
             errorMessage = string.Empty;
-            cardRecords = null;
+            cardsByIndex = null;
 
             // Validate input
             if (_boardConfig == null)
@@ -88,6 +89,8 @@ namespace AGAPI.Gameplay
             }
 
             _remainingPairs = effectiveTotal / 2;
+            cardsByIndex = _cardsByIndex;
+
             return true;
         }
 
@@ -102,8 +105,7 @@ namespace AGAPI.Gameplay
                 _cardsByIndex.Add(kvp.Key, cardData);
             }
 
-            var totalCards = cardRecords.Count;
-            _remainingPairs = totalCards / 2;
+            _remainingPairs = cardRecords.Values.Count(r => r != null && !r.Matched) / 2;
         }
 
         public void OnGameStart()

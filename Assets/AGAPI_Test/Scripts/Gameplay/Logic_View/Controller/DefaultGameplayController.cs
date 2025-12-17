@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AGAPI.Foundation;
+using AGAPI.Systems;
 
 namespace AGAPI.Gameplay
 {
     public class DefaultGameplayController : IGameplayController, IBoardInputHandler, IUIInputHandler
     {
+        // Aliases; 
+        private static readonly Key FileKey = PresistanceKeys.Gameplay.FileKey;
+        private static readonly Key LevelProgressionDataKey = PresistanceKeys.Gameplay.LevelProgressionDataKey;
 
         private IBoardManager _boardManager;
         private LevelProgression _levelProgression;
@@ -17,16 +21,18 @@ namespace AGAPI.Gameplay
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly GameplayEvents _gameplayEvents;
         private readonly ScoreConfig _scoreConfig;
+        private readonly IPersistenceService _persistenceService;
 
         public DefaultGameplayController(IBoardVisuals boardVisuals, BoardConfig boardConfig,
                                         ICoroutineRunner coroutineRunner, GameplayEvents gameplayEvents,
-                                        ScoreConfig scoreConfig)
+                                        ScoreConfig scoreConfig, IPersistenceService persistenceService)
         {
             _boardVisuals = boardVisuals;
             _boardConfig = boardConfig;
             _coroutineRunner = coroutineRunner;
             _gameplayEvents = gameplayEvents;
             _scoreConfig = scoreConfig;
+            _persistenceService = persistenceService;
 
             Initialize();
             Debug.Log("DefaultGameplayController initialized.");
@@ -38,7 +44,7 @@ namespace AGAPI.Gameplay
             _scoreSystem.ApplyMatchResult(isMatch);
             _gameplayEvents.Invoke(new GameplayEvents.OnScoreUpdate(_scoreSystem.Score));
 
-            // to do : update score on level progression
+            _levelProgression.UpdateScore(_scoreSystem.Score);
             _levelProgression.UpdateCardRecord(firstCard);
             _levelProgression.UpdateCardRecord(secondCard);
             if (remainingPairs == 0)
@@ -47,7 +53,7 @@ namespace AGAPI.Gameplay
                 _gameplayEvents.Invoke(new GameplayEvents.OnLevelCompleted());
             }
 
-            // to do : set _levelProgression updates dirty on saving system
+            _persistenceService.MarkDirty(FileKey, LevelProgressionDataKey, _levelProgression);
         }
 
         // ------- IBoardInputHandler iplementation -------
@@ -61,11 +67,13 @@ namespace AGAPI.Gameplay
         {
             if (_boardManager.TryCreateNewBoard(boardSize, out var cardRecords, out var errorMessage))
             {
-                _levelProgression.SetInitialCardRecords(new Dictionary<int, CardData>());
+                _scoreSystem.ResetScore();
+                _levelProgression.ResetProgression();
+                _levelProgression.SetInitialCardRecords(cardRecords);
                 _levelProgression.SetBoardSize(boardSize);
                 _levelProgression.MarkLevelStarted();
-                // to do : set _levelProgression updates dirty on saving system
-                _scoreSystem.ResetScore();
+                _levelProgression.UpdateScore(_scoreSystem.Score);
+                _persistenceService.MarkDirty(FileKey, LevelProgressionDataKey, _levelProgression);
                 StartGame();
 
             }
@@ -97,7 +105,7 @@ namespace AGAPI.Gameplay
         // ------- Private methodes -------
         private void Initialize()
         {
-            _levelProgression = new LevelProgression();
+            _levelProgression = (LevelProgression)_persistenceService.Load(FileKey, LevelProgressionDataKey, new LevelProgression());
             _boardManager = new DefaultBoardManager(_boardVisuals, _boardConfig, this, _coroutineRunner);
             _scoreSystem = new DefaultScoreSystem(_scoreConfig);
         }

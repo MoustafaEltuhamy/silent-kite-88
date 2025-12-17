@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using AGAPI.Systems;
 using UnityEngine;
 
 
 namespace AGAPI.Gameplay
 {
-    public class LevelProgression
+    public class LevelProgression : IPersistable<LevelProgressionRecord>
     {
         private LevelProgressionRecord _record = new();
 
@@ -14,11 +14,12 @@ namespace AGAPI.Gameplay
         public Vector2Int BoardSize => _record.BoardSize;
         public int Score => _record.Score;
 
+        public void ResetProgression()
+        {
+            _record = new LevelProgressionRecord();
+        }
         public void SetInitialCardRecords(Dictionary<int, CardData> cardDatasByIndex)
         {
-            // extra safety
-            _record = new();
-
             foreach (var kvp in cardDatasByIndex)
             {
                 UpdateCardRecord(kvp.Value);
@@ -57,6 +58,23 @@ namespace AGAPI.Gameplay
             {
                 _record.CardRecordsByIndex.Add(index, cardRecord);
             }
+        }
+
+
+        // ------- IPersistable implementation -------
+        public LevelProgressionRecord GetRecordSnapshot()
+        {
+            return _record;
+        }
+
+        public void LoadRecord(LevelProgressionRecord record)
+        {
+            if (record == null)
+            {
+                return;
+            }
+
+            _record = record;
         }
     }
 }
