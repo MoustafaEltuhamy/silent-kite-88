@@ -252,4 +252,4 @@ MonoBehaviour:
   cardImage: {fileID: 6245110523335600057}
   cardMatchableImage: {fileID: 6245110523252786176}
   cardButton: {fileID: 6245110523335600056}
-  flipHalfDuration: 0.08
+  flipHalfDuration: 0.12

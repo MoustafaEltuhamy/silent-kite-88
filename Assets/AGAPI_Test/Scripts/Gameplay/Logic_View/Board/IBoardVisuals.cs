@@ -13,5 +13,4 @@ namespace AGAPI.Gameplay
         void FlipCardDown(int cardIndex, Action onFlipComplete = null);
         void MatchCard(int cardIndex);
     }
-
 }

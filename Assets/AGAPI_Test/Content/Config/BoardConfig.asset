@@ -9,32 +9,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69d292c6ebc054aa7b8c22c7d3f04018, type: 3}
+  m_Script: {fileID: 11500000, guid: 41b7584bf4ced4932ab74b1763287e02, type: 3}
   m_Name: BoardConfig
   m_EditorClassIdentifier: 
   cardVisualPrefab: {fileID: 6245110523406263222, guid: db49940d224e147c2879bb5187e85424, type: 3}
   cardUpColor:
     serializedVersion: 2
-    rgba: 4292142823
+    rgba: 4289317322
   cardDownColor:
     serializedVersion: 2
-    rgba: 4282335039
+    rgba: 4281348144
   matchableColors:
   - serializedVersion: 2
-    rgba: 4284901073
+    rgba: 4283058880
   - serializedVersion: 2
-    rgba: 4284791216
+    rgba: 4287255467
   - serializedVersion: 2
-    rgba: 4280341469
+    rgba: 4290339423
   - serializedVersion: 2
-    rgba: 4290990167
+    rgba: 4285163057
   - serializedVersion: 2
-    rgba: 4286992055
+    rgba: 4289376374
   - serializedVersion: 2
-    rgba: 4290798486
+    rgba: 4291927445
   - serializedVersion: 2
-    rgba: 4285183845
+    rgba: 4283928020
   - serializedVersion: 2
-    rgba: 4285622075
-  cardRevealTimeoutSeconds: 1
-  initialRevealDuratoin: 0.5
+    rgba: 4285324242
+  - serializedVersion: 2
+    rgba: 4281198939
+  - serializedVersion: 2
+    rgba: 4287509863
+  cardRevealTimeoutSeconds: 2
+  initialRevealDuratoin: 1
