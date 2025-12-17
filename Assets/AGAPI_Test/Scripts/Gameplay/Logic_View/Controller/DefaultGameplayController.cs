@@ -10,11 +10,13 @@ namespace AGAPI.Gameplay
         private IBoardManager _boardManager;
         private LevelProgression _levelProgression;
 
+        private readonly IBoardVisuals _boardVisuals;
         private readonly BoardConfig _boardConfig;
         private readonly ICoroutineRunner _coroutineRunner;
 
-        public DefaultGameplayController(BoardConfig boardConfig, ICoroutineRunner coroutineRunner)
+        public DefaultGameplayController(IBoardVisuals boardVisuals, BoardConfig boardConfig, ICoroutineRunner coroutineRunner)
         {
+            _boardVisuals = boardVisuals;
             _boardConfig = boardConfig;
             _coroutineRunner = coroutineRunner;
             Initialize();
@@ -57,12 +59,13 @@ namespace AGAPI.Gameplay
                 Debug.LogError($"Failed to start new game. Error: {errorMessage}");
             }
         }
-        public bool TryContenueGame()
+        public bool TryContinueGame()
         {
             if (_levelProgression.IsLevelInProgress)
             {
+                var boardSize = _levelProgression.BoardSize;
                 var cardRecords = _levelProgression.GetCardRecords();
-                _boardManager.CreateBoardFromRecord(cardRecords);
+                _boardManager.CreateBoardFromRecord(boardSize, cardRecords);
                 return true;
             }
             return false;
@@ -73,7 +76,7 @@ namespace AGAPI.Gameplay
         private void Initialize()
         {
             _levelProgression = new LevelProgression();
-            _boardManager = new DefaultBoardManager(_boardConfig, this, _coroutineRunner);
+            _boardManager = new DefaultBoardManager(_boardVisuals, _boardConfig, this, _coroutineRunner);
         }
     }
 }

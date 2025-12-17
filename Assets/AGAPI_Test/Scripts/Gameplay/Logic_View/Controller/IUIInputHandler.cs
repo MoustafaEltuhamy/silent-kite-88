@@ -8,6 +8,6 @@ namespace AGAPI.Gameplay
     public interface IUIInputHandler
     {
         void StartNewGame(Vector2Int boardSize);
-
+        bool TryContinueGame();
     }
 }

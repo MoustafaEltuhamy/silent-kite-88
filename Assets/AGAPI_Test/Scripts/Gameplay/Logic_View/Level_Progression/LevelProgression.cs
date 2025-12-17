@@ -11,6 +11,7 @@ namespace AGAPI.Gameplay
         private LevelProgressionRecord _record = new();
 
         public bool IsLevelInProgress => _record.InProgress;
+        public Vector2Int BoardSize => _record.BoardSize;
 
         public void SetInitialCardRecords(Dictionary<int, CardData> cardDatasByIndex)
         {

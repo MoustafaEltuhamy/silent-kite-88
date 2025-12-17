@@ -11,7 +11,7 @@ namespace AGAPI.Gameplay
         private CardState _cardState;
 
         public CardState CardState => _cardState;
-        public int CardID => _cardRecord.CardID;
+        public int CardId => _cardRecord.CardID;
         public int Index => _cardRecord.CardIndex;
         public bool IsMatched => _cardRecord.Matched;
 

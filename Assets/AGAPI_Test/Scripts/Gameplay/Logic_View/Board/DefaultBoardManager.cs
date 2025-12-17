@@ -9,14 +9,18 @@ namespace AGAPI.Gameplay
     public class DefaultBoardManager : IBoardManager
     {
         private int _remainingPairs = 0;
+        private Vector2Int _boardSize;
         private Queue<CardData> _pickedCards = new();
+
         private readonly Dictionary<int, CardData> _cardsByIndex = new();
+        private readonly IBoardVisuals _boardVisuals;
         private readonly BoardConfig _boardConfig;
         private readonly IGameplayController _gameplayController;
         private readonly ICoroutineRunner _coroutineRunner;
 
-        public DefaultBoardManager(BoardConfig config, IGameplayController controller, ICoroutineRunner coroutineRunner)
+        public DefaultBoardManager(IBoardVisuals boardVisuals, BoardConfig config, IGameplayController controller, ICoroutineRunner coroutineRunner)
         {
+            _boardVisuals = boardVisuals;
             _boardConfig = config;
             _gameplayController = controller;
             _coroutineRunner = coroutineRunner;
@@ -57,8 +61,8 @@ namespace AGAPI.Gameplay
                 return false;
             }
 
+            _boardSize = size;
             _cardsByIndex.Clear();
-
             int pairsNeeded = totalCards / 2;
             int idsCount = availableIds.Count;
 
@@ -87,8 +91,9 @@ namespace AGAPI.Gameplay
             return true;
         }
 
-        public void CreateBoardFromRecord(Dictionary<int, CardRecord> cardRecords)
+        public void CreateBoardFromRecord(Vector2Int boardSize, Dictionary<int, CardRecord> cardRecords)
         {
+            _boardSize = boardSize;
             _cardsByIndex.Clear();
 
             foreach (var kvp in cardRecords)
@@ -141,7 +146,7 @@ namespace AGAPI.Gameplay
 
         void ProcessPickedCard(CardData pickedCard)
         {
-            // to do : call flip up animation on card visual and pass a callback 'OnCardFlipUpComplete'
+            _boardVisuals.FlipCardUp(pickedCard.Index, () => OnCardFlipUpComplete(pickedCard));
             pickedCard.SetCardState(CardState.Locked);
             _pickedCards.Enqueue(pickedCard);
             if (_pickedCards.Count >= 2)
@@ -176,18 +181,21 @@ namespace AGAPI.Gameplay
 
         private void ComparePickedPair(CardData firstCard, CardData secondCard)
         {
-            bool isMatch = firstCard.CardID == secondCard.CardID;
+            bool isMatch = firstCard.CardId == secondCard.CardId;
 
             if (isMatch)
             {
                 firstCard.SetMatched(true);
                 secondCard.SetMatched(true);
+                _boardVisuals.MatchCard(firstCard.Index);
+                _boardVisuals.MatchCard(secondCard.Index);
+
                 _remainingPairs--;
-                // to do : call matchCard on card visual so a match animation and visual disables happens 
             }
             else
             {
-                // to do : call flip down animation on card visual and pass a callback 'OnCardFlipDownComplete'
+                _boardVisuals.FlipCardDown(firstCard.Index, () => OnCardFlipDownComplete(firstCard));
+                _boardVisuals.FlipCardDown(secondCard.Index, () => OnCardFlipDownComplete(secondCard));
             }
 
             // Report result to controller
@@ -237,7 +245,7 @@ namespace AGAPI.Gameplay
 
         private void InitializeBoardVisuals()
         {
-            // to do : implement board visuals initialization
+            _boardVisuals.InitializeVisuals(_boardSize, _cardsByIndex);
         }
     }
 }

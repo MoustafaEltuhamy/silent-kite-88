@@ -9,7 +9,7 @@ namespace AGAPI.Gameplay
     public interface IBoardManager
     {
         bool TryCreateNewBoard(Vector2Int size, out Dictionary<int, CardRecord> cardRecords, out string errorMessage);
-        void CreateBoardFromRecord(Dictionary<int, CardRecord> cardRecords);
+        void CreateBoardFromRecord(Vector2Int boardSize, Dictionary<int, CardRecord> cardRecords);
         void PickCard(int cardIndex);
 
     }

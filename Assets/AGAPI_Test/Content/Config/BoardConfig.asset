@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d292c6ebc054aa7b8c22c7d3f04018, type: 3}
+  m_Name: BoardConfig
+  m_EditorClassIdentifier: 
+  cardVisualPrefab: {fileID: 6245110523406263222, guid: db49940d224e147c2879bb5187e85424, type: 3}
+  cardUpColor:
+    serializedVersion: 2
+    rgba: 4292142823
+  cardDownColor:
+    serializedVersion: 2
+    rgba: 4282335039
+  matchableColors:
+  - serializedVersion: 2
+    rgba: 4284901073
+  - serializedVersion: 2
+    rgba: 4284791216
+  - serializedVersion: 2
+    rgba: 4280341469
+  - serializedVersion: 2
+    rgba: 4290990167
+  - serializedVersion: 2
+    rgba: 4286992055
+  - serializedVersion: 2
+    rgba: 4290798486
+  - serializedVersion: 2
+    rgba: 4285183845
+  - serializedVersion: 2
+    rgba: 4285622075
+  cardRevealTimeoutSeconds: 1
+  initialRevealDuratoin: 0.5
